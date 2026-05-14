@@ -1,0 +1,39 @@
+{
+  "students": [
+    { "name": "Mari", "grade": 5 },
+    { "name": "Jüri", "grade": 3 },
+    { "name": "Kati", "grade": 4 },
+    { "name": "Rasmus", "grade": 5 }
+  ],
+  "weather": [
+    { "city": "Tõrva", "temperature": -2, "condition": "Pilves" },
+    { "city": "Tallinn", "temperature": 1, "condition": "Lumine" },
+    { "city": "Tartu", "temperature": 0, "condition": "Selgimistega" },
+    { "city": "Pärnu", "temperature": 3, "condition": "Tuuline" }
+  ],
+  "users": [
+    { "name": "Liis", "role": "admin" },
+    { "name": "Karl", "role": "õpilane" },
+    { "name": "Anna", "role": "õpetaja" }
+  ],
+  "products": [
+    { "name": "Märkmik", "category": "Kontor", "price": 3.5 },
+    { "name": "Pastakas", "category": "Kontor", "price": 1.2 },
+    { "name": "Kõrvaklapid", "category": "Tehnika", "price": 24.9 },
+    { "name": "Laualamp", "category": "Kodu", "price": 18.5 },
+    { "name": "Seljakott", "category": "Kool", "price": 32.0 }
+  ],
+  "news": [
+    { "title": "JavaScripti tund algab vormidega" },
+    { "title": "Õpilased katsetasid fetch API-t" },
+    { "title": "Valmis esimene mini-rakendus" }
+  ],
+  "books": [
+    { "id": 1, "title": "Tõde ja õigus", "author": "A. H. Tammsaare", "genre": "Klassika" },
+    { "id": 2, "title": "Rehepapp", "author": "Andrus Kivirähk", "genre": "Fantaasia" },
+    { "id": 3, "title": "Mees, kes teadis ussisõnu", "author": "Andrus Kivirähk", "genre": "Fantaasia" },
+    { "id": 4, "title": "Kevade", "author": "Oskar Luts", "genre": "Klassika" },
+    { "id": 5, "title": "Nullpunkt", "author": "Margus Karu", "genre": "Noortekirjandus" },
+    { "id": 6, "title": "Apteeker Melchior", "author": "Indrek Hargla", "genre": "Krimi" }
+  ]
+}

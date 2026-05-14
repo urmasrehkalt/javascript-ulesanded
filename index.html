@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScripti ülesanded</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="hero">
+    <nav class="topbar" aria-label="Peamenüü">
+      <a href="#greeting">Tervitaja</a>
+      <a href="#calculator">Kalkulaator</a>
+      <a href="#forms">Vormid</a>
+      <a href="#data">JSON</a>
+      <a href="#library">Lõputöö</a>
+    </nav>
+    <div class="hero-content">
+      <p class="eyebrow">JavaScripti õppeprojekt</p>
+      <h1>13 praktilist ülesannet ühel lehel</h1>
+      <p>Leht liigub lihtsatest sündmustest ja vormidest andmete laadimise, filtreerimise ning localStorage kasutamiseni.</p>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section id="greeting" class="card accent-card">
+      <span class="task-number">1</span>
+      <h2>Tere, JavaScript</h2>
+      <p>Sisesta nimi ja JavaScript muudab lehel kuvatavat teksti.</p>
+      <div class="form-row">
+        <label for="nameInput">Nimi</label>
+        <input id="nameInput" type="text" placeholder="Näiteks Mari">
+        <button id="greetButton" type="button">Tervita</button>
+      </div>
+      <output id="greetingResult" class="result">Tulemus kuvatakse siin.</output>
+    </section>
+
+    <section id="calculator" class="card">
+      <span class="task-number">2</span>
+      <h2>Lihtne kalkulaator</h2>
+      <p>Kasutab eelmistest ülesannetest sisendi lugemist ja lisab arvutamise.</p>
+      <div class="grid two-columns">
+        <label>Esimene arv
+          <input id="firstNumber" type="number" step="any" value="12">
+        </label>
+        <label>Teine arv
+          <input id="secondNumber" type="number" step="any" value="3">
+        </label>
+        <label>Tehe
+          <select id="operationSelect">
+            <option value="add">Liitmine</option>
+            <option value="subtract">Lahutamine</option>
+            <option value="multiply">Korrutamine</option>
+            <option value="divide">Jagamine</option>
+          </select>
+        </label>
+        <button id="calculateButton" type="button">Arvuta</button>
+      </div>
+      <output id="calculatorResult" class="result">Vali arvud ja tehe.</output>
+    </section>
+
+    <section id="forms" class="card wide-card">
+      <span class="task-number">3-4</span>
+      <h2>Parool ja registreerimisvorm</h2>
+      <div class="grid two-columns">
+        <article class="mini-panel">
+          <h3>Parooli tugevus</h3>
+          <label>Parool
+            <input id="passwordInput" type="password" placeholder="Sisesta parool">
+          </label>
+          <ul class="check-list" id="passwordRules">
+            <li data-rule="length">Vähemalt 8 märki</li>
+            <li data-rule="number">Sisaldab numbrit</li>
+            <li data-rule="uppercase">Sisaldab suurtähte</li>
+            <li data-rule="special">Sisaldab erimärki</li>
+          </ul>
+          <output id="passwordResult" class="result">Tugevus: puudub</output>
+        </article>
+
+        <article class="mini-panel">
+          <h3>Registreerimisvorm</h3>
+          <form id="registrationForm" novalidate>
+            <label>Nimi
+              <input id="registerName" type="text" autocomplete="name">
+            </label>
+            <label>E-post
+              <input id="registerEmail" type="email" autocomplete="email">
+            </label>
+            <label>Vanus
+              <input id="registerAge" type="number" min="1" value="13">
+            </label>
+            <label>Parool
+              <input id="registerPassword" type="password" autocomplete="new-password">
+            </label>
+            <label>Parooli kordus
+              <input id="registerRepeat" type="password" autocomplete="new-password">
+            </label>
+            <button type="submit">Kontrolli vormi</button>
+          </form>
+          <ul id="registrationMessages" class="message-list"></ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="gallery" class="card">
+      <span class="task-number">5</span>
+      <h2>Pildigalerii</h2>
+      <p>Väikesel pildil klõpsamine muudab suure pildi allikat.</p>
+      <img id="mainGalleryImage" class="main-image" alt="Valitud galerii pilt">
+      <div id="thumbnailList" class="thumbnail-list" aria-label="Galerii eelvaated"></div>
+      <button id="nextImageButton" type="button">Järgmine pilt</button>
+    </section>
+
+    <section id="theme" class="card">
+      <span class="task-number">6</span>
+      <h2>Kujunduse muutja</h2>
+      <p>Valikud salvestatakse localStorage-isse ja taastatakse lehe avamisel.</p>
+      <div class="grid two-columns">
+        <label>Kujundus
+          <select id="themeMode">
+            <option value="light">Hele</option>
+            <option value="dark">Tume</option>
+          </select>
+        </label>
+        <label>Taustavärv
+          <input id="backgroundColor" type="color" value="#f4f7fb">
+        </label>
+        <label>Fondi suurus
+          <select id="fontSize">
+            <option value="15px">Väike</option>
+            <option value="16px" selected>Tavaline</option>
+            <option value="18px">Suur</option>
+          </select>
+        </label>
+        <button id="resetThemeButton" type="button">Taasta algne</button>
+      </div>
+    </section>
+
+    <section id="todo" class="card">
+      <span class="task-number">7</span>
+      <h2>To-do list</h2>
+      <p>Ülesanded luuakse JavaScriptiga, neid saab märkida tehtuks ja salvestada.</p>
+      <form id="todoForm" class="inline-form">
+        <label for="todoInput">Uus ülesanne</label>
+        <input id="todoInput" type="text" placeholder="Näiteks korda JSON üle">
+        <button type="submit">Lisa</button>
+      </form>
+      <ul id="todoList" class="todo-list"></ul>
+    </section>
+
+    <section id="data" class="card wide-card">
+      <span class="task-number">8-11</span>
+      <h2>JSON, ilm, AJAX ja filtreerimine</h2>
+      <div class="grid two-columns">
+        <article class="mini-panel">
+          <h3>Õpilaste tabel</h3>
+          <button id="showStrongStudents" type="button">Näita hindeid 4 ja 5</button>
+          <button id="showAllStudents" type="button">Näita kõiki</button>
+          <table>
+            <thead>
+              <tr><th>Nimi</th><th>Hinne</th></tr>
+            </thead>
+            <tbody id="studentsTable"></tbody>
+          </table>
+          <output id="averageGrade" class="result"></output>
+        </article>
+
+        <article class="mini-panel">
+          <h3>Mini-ilmarakendus</h3>
+          <label>Linn
+            <select id="weatherCity"></select>
+          </label>
+          <output id="weatherResult" class="weather-card">Vali linn.</output>
+        </article>
+
+        <article class="mini-panel">
+          <h3>AJAX-andmete laadimine</h3>
+          <p>Andmed tulevad nupuvajutusega failist <code>data.json</code>.</p>
+          <button id="loadDataButton" type="button">Laadi andmed</button>
+          <div id="ajaxResult" class="ajax-result"></div>
+        </article>
+
+        <article class="mini-panel">
+          <h3>Toodete otsing ja sortimine</h3>
+          <label>Otsi nime järgi
+            <input id="productSearch" type="search" placeholder="Näiteks märkmik">
+          </label>
+          <label>Kategooria
+            <select id="productCategory"></select>
+          </label>
+          <label>Sorteeri
+            <select id="productSort">
+              <option value="name">Nime järgi</option>
+              <option value="price">Hinna järgi</option>
+            </select>
+          </label>
+          <ul id="productList" class="product-list"></ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="jquery" class="card">
+      <span class="task-number">12</span>
+      <h2>jQuery võrdlusülesanne</h2>
+      <div class="grid two-columns">
+        <article class="mini-panel">
+          <h3>Tavaline JavaScript</h3>
+          <p id="vanillaText" class="animated-box">Seda teksti peidab ja kuvab tavaline JavaScript.</p>
+          <button id="vanillaToggle" type="button">Peida/kuva</button>
+        </article>
+        <article class="mini-panel">
+          <h3>jQuery</h3>
+          <p id="jqueryText" class="animated-box">Seda teksti peidab ja kuvab jQuery animatsioon.</p>
+          <button id="jqueryToggle" type="button">Peida/kuva</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="library" class="card wide-card final-card">
+      <span class="task-number">13</span>
+      <h2>Lõpuülesanne: raamatukogu nimekiri</h2>
+      <p>Raamatud laetakse JSON-ist, kasutaja saab otsida, filtreerida ja märkida raamatuid loetuks. Loetud olek salvestatakse localStorage-isse.</p>
+      <div class="library-controls">
+        <label>Otsi pealkirja
+          <input id="bookSearch" type="search" placeholder="Näiteks tõde">
+        </label>
+        <label>Žanr
+          <select id="bookGenre"></select>
+        </label>
+        <button id="resetReadBooks" type="button">Tühjenda loetud</button>
+      </div>
+      <div id="libraryList" class="library-list"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Kui fetch ei tööta otse failist avades, käivita kohalik server: <code>python3 -m http.server</code>.</p>
+  </footer>
+</body>
+</html>
