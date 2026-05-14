@@ -6,10 +6,10 @@
     { "name": "Rasmus", "grade": 5 }
   ],
   "weather": [
-    { "city": "Tõrva", "temperature": -2, "condition": "Pilves" },
-    { "city": "Tallinn", "temperature": 1, "condition": "Lumine" },
-    { "city": "Tartu", "temperature": 0, "condition": "Selgimistega" },
-    { "city": "Pärnu", "temperature": 3, "condition": "Tuuline" }
+    { "city": "Tõrva", "latitude": 58.0028, "longitude": 25.9350 },
+    { "city": "Tallinn", "latitude": 59.4370, "longitude": 24.7536 },
+    { "city": "Tartu", "latitude": 58.3776, "longitude": 26.7290 },
+    { "city": "Pärnu", "latitude": 58.3859, "longitude": 24.4971 }
   ],
   "users": [
     { "name": "Liis", "role": "admin" },

@@ -23,7 +23,8 @@ Kui `./start.sh` käivitatakse uuesti, peatab skript eelmise sama teenuse protse
 - `index.html` - lehe struktuur ja kõik ülesannete sektsioonid
 - `styles.css` - kujundus ja responsive layout
 - `script.js` - kogu JavaScripti loogika
-- `data.json` - JSON-andmed õpilaste, ilma, toodete, uudiste ja raamatute jaoks
+- `data.json` - JSON-andmed õpilaste, ilmalinnade, toodete, uudiste ja raamatute jaoks
+- `data/` - galerii pildifailid
 - `start.sh` - kohalik käivitusskript pordil `8001`
 
 ## Ülesanded
@@ -34,11 +35,11 @@ Projekt sisaldab järgmisi osi:
 2. Lihtne kalkulaator nelja põhitehtega
 3. Parooli tugevuse kontrollija
 4. Registreerimisvorm kontrollidega
-5. Pildigalerii eelvaadete ja järgmise pildi nupuga
+5. Pildigalerii `data/` kataloogis olevate päris piltidega
 6. Taustavärvi, teema ja fondi suuruse muutja localStorage salvestusega
 7. To-do list lisamise, tehtuks märkimise, kustutamise ja salvestusega
 8. Õpilaste JSON-andmete kuvamine tabelis
-9. Mini-ilmarakendus linna valikuga
+9. Mini-ilmarakendus linna valiku ja Open-Meteo päris ilmaandmetega
 10. AJAX-andmete laadimine `data.json` failist
 11. Toodete otsing, kategooriafilter ja sortimine
 12. Sama peitmise/kuvamise näide tavalise JavaScripti ja jQueryga
@@ -47,5 +48,6 @@ Projekt sisaldab järgmisi osi:
 ## Märkused
 
 - `fetch()` vajab kohalikku serverit, seetõttu ära ava `index.html` faili otse brauseris.
+- Mini-ilmarakendus kasutab Open-Meteo avalikku API-t ja vajab toimivat internetiühendust.
 - Runtime failid `.server.pid` ja `.server.log` on `.gitignore` failis.
 - Algne ülesandekirjelduse fail on samuti `.gitignore` failis ja ei kuulu projekti avalikku koodi.

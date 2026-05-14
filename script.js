@@ -6,10 +6,10 @@ const fallbackData = {
     { name: "Rasmus", grade: 5 }
   ],
   weather: [
-    { city: "Tõrva", temperature: -2, condition: "Pilves" },
-    { city: "Tallinn", temperature: 1, condition: "Lumine" },
-    { city: "Tartu", temperature: 0, condition: "Selgimistega" },
-    { city: "Pärnu", temperature: 3, condition: "Tuuline" }
+    { city: "Tõrva", latitude: 58.0028, longitude: 25.9350 },
+    { city: "Tallinn", latitude: 59.4370, longitude: 24.7536 },
+    { city: "Tartu", latitude: 58.3776, longitude: 26.7290 },
+    { city: "Pärnu", latitude: 58.3859, longitude: 24.4971 }
   ],
   users: [
     { name: "Liis", role: "admin" },
@@ -44,10 +44,10 @@ let todos = JSON.parse(localStorage.getItem("todos") || "[]");
 let readBooks = JSON.parse(localStorage.getItem("readBooks") || "[]");
 
 const galleryImages = [
-  { label: "Sinine mägi", color: "#265df2", accent: "#91b4ff" },
-  { label: "Roheline mets", color: "#00a878", accent: "#a7f3d0" },
-  { label: "Päikeseloojang", color: "#f97316", accent: "#fed7aa" },
-  { label: "Öine linn", color: "#111827", accent: "#818cf8" }
+  { label: "Sinine mägi", src: "data/blue_mountain.jpg" },
+  { label: "Roheline mets", src: "data/green_forest.jpg" },
+  { label: "Päikeseloojang", src: "data/sunset.jpg" },
+  { label: "Öine linn", src: "data/night_city.jpg" }
 ];
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -229,7 +229,7 @@ function setupGallery() {
   galleryImages.forEach((image, index) => {
     const button = document.createElement("button");
     const thumbnail = document.createElement("img");
-    thumbnail.src = createSvgImage(image.label, image.color, image.accent);
+    thumbnail.src = image.src;
     thumbnail.alt = image.label;
     button.type = "button";
     button.append(thumbnail);
@@ -246,18 +246,13 @@ function setupGallery() {
   function updateGallery(index) {
     galleryIndex = index;
     const image = galleryImages[index];
-    mainImage.src = createSvgImage(image.label, image.color, image.accent);
+    mainImage.src = image.src;
     mainImage.alt = image.label;
 
     thumbnailList.querySelectorAll("button").forEach((button, buttonIndex) => {
       button.classList.toggle("active", buttonIndex === index);
     });
   }
-}
-
-function createSvgImage(label, color, accent) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520"><rect width="900" height="520" fill="${color}"/><circle cx="720" cy="120" r="95" fill="${accent}" opacity="0.9"/><path d="M0 390 L220 210 L410 360 L560 250 L900 410 L900 520 L0 520 Z" fill="${accent}" opacity="0.75"/><text x="60" y="105" fill="white" font-family="Arial" font-size="56" font-weight="700">${label}</text></svg>`;
-  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
 
 function setupThemeControls() {
@@ -396,14 +391,73 @@ function setupWeather(weather) {
   const citySelect = document.querySelector("#weatherCity");
   const result = document.querySelector("#weatherResult");
 
-  citySelect.innerHTML = weather.map((item) => `<option value="${item.city}">${item.city}</option>`).join("");
-  citySelect.addEventListener("change", renderWeather);
-  renderWeather();
+  citySelect.innerHTML = weather.map((item, index) => `<option value="${index}">${item.city}</option>`).join("");
+  citySelect.addEventListener("change", () => renderWeather(weather));
+  renderWeather(weather);
+}
 
-  function renderWeather() {
-    const selected = weather.find((item) => item.city === citySelect.value);
-    result.textContent = `${selected.city}: ${selected.temperature} °C, ${selected.condition}`;
+async function renderWeather(weather) {
+  const citySelect = document.querySelector("#weatherCity");
+  const result = document.querySelector("#weatherResult");
+  const selected = weather[Number(citySelect.value)];
+
+  if (!selected) {
+    result.textContent = "Linna ei leitud.";
+    result.className = "weather-card error";
+    return;
   }
+
+  result.textContent = `Laen linna ${selected.city} ilmaandmeid...`;
+  result.className = "weather-card";
+
+  try {
+    const url = new URL("https://api.open-meteo.com/v1/forecast");
+    url.searchParams.set("latitude", selected.latitude);
+    url.searchParams.set("longitude", selected.longitude);
+    url.searchParams.set("current", "temperature_2m,weather_code,wind_speed_10m");
+    url.searchParams.set("timezone", "auto");
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+    const current = data.current;
+
+    result.textContent = `${selected.city}: ${current.temperature_2m} °C, ${getWeatherDescription(current.weather_code)}, tuul ${current.wind_speed_10m} km/h`;
+    result.className = "weather-card success";
+  } catch (error) {
+    result.textContent = "Päris ilmaandmete laadimine ebaõnnestus. Kontrolli internetiühendust ja proovi uuesti.";
+    result.className = "weather-card error";
+  }
+}
+
+function getWeatherDescription(code) {
+  const descriptions = {
+    0: "selge",
+    1: "peamiselt selge",
+    2: "osaliselt pilves",
+    3: "pilves",
+    45: "udu",
+    48: "härmatisudu",
+    51: "nõrk uduvihm",
+    53: "mõõdukas uduvihm",
+    55: "tugev uduvihm",
+    61: "nõrk vihm",
+    63: "mõõdukas vihm",
+    65: "tugev vihm",
+    71: "nõrk lumesadu",
+    73: "mõõdukas lumesadu",
+    75: "tugev lumesadu",
+    80: "nõrk hoovihm",
+    81: "mõõdukas hoovihm",
+    82: "tugev hoovihm",
+    95: "äike"
+  };
+
+  return descriptions[code] || `ilmkood ${code}`;
 }
 
 function setupAjaxLoader() {
